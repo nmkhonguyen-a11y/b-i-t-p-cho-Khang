@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trắc Nghiệm Lớp 3 - Kết Nối Tri Thức Với Cuộc Sống</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Be Vietnam Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#FF6B8B',
+                            yellow: '#FFD166',
+                            green: '#06D6A0',
+                            blue: '#118AB2',
+                            darkBlue: '#073B4C',
+                            purple: '#A06CD5'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Fredoka', 'sans-serif'],
+                        body: ['Be Vietnam Pro', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            min-height: 100vh;
+        }
+
+        .font-display {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .option-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: #118AB2;
+            background-color: #E0F2FE;
+            box-shadow: 0 4px 12px rgba(17, 138, 178, 0.15);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-2 sm:p-4 md:p-6 flex flex-col justify-between min-h-screen">
+
+    <!-- TOP HEADER -->
+    <header class="max-w-4xl mx-auto w-full bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-lg mb-4 border-2 border-white flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="goToMenu()">
+            <div class="w-12 h-12 bg-amber-400 rounded-2xl flex items-center justify-center text-2xl text-white shadow-md animate-float">
+                📚
+            </div>
+            <div>
+                <h1 class="font-display text-lg sm:text-xl md:text-2xl font-bold text-slate-800 leading-tight">
+                    EM HỌC TỐT LỚP 3 🎉
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-500 font-medium">Sách: <span class="text-brand-blue font-semibold">Kết nối tri thức với cuộc sống</span></p>
+            </div>
+        </div>
+
+        <div id="quizHeaderStats" class="hidden flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-1.5 text-rose-500 font-bold text-sm sm:text-base">
+                <i class="fa-regular fa-clock"></i>
+                <span id="timerDisplay">00:00</span>
+            </div>
+            <div class="h-4 w-[1px] bg-slate-300"></div>
+            <div class="text-xs sm:text-sm font-semibold text-slate-600">
+                Câu <span id="currentQuestionNum" class="text-brand-blue font-bold">1</span>/20
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl mx-auto w-full flex-grow flex flex-col justify-center">
+
+        <!-- SUBJECT SELECTION MENU SCREEN -->
+        <div id="welcomeScreen" class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border-4 border-white text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-200 rounded-full blur-2xl opacity-50"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-50"></div>
+
+            <div class="relative z-10">
+                <div class="inline-block bg-sky-100 text-sky-700 font-display font-semibold text-sm px-4 py-1.5 rounded-full mb-3">
+                    ✨ Bộ Đề Trắc Nghiệm Lớp 3
+                </div>
+
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-800 mb-2">
+                    Chọn Môn Học Em Muốn Luyện Tập! 🌟
+                </h2>
+                <p class="text-slate-600 max-w-xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
+                    Mỗi môn gồm đúng <strong class="text-brand-blue font-bold">20 câu hỏi trắc nghiệm</strong> bám sát chương trình sách giáo khoa Kết nối tri thức. Hãy chọn một môn để bắt đầu nhé!
+                </p>
+
+                <!-- Subject Selection Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto">
+                    <!-- Math Card -->
+                    <div onclick="selectSubject('math')" class="group cursor-pointer bg-gradient-to-b from-rose-50 to-rose-100 hover:from-rose-500 hover:to-rose-600 rounded-3xl p-6 border-4 border-rose-200 hover:border-rose-300 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                            📐
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-rose-600 group-hover:text-white transition-colors">Toán Học</h3>
+                        <p class="text-xs text-rose-500 group-hover:text-rose-100 mt-1 font-medium">20 Câu hỏi (Hàng chục)</p>
+                        <div class="mt-4 bg-white group-hover:bg-amber-400 text-rose-600 group-hover:text-slate-900 text-xs font-bold px-4 py-2 rounded-xl transition-colors">
+                            Bắt đầu ôn tập ➔
+                        </div>
+                    </div>
+
+                    <!-- Vietnamese Card -->
+                    <div onclick="selectSubject('vietnamese')" class="group cursor-pointer bg-gradient-to-b from-emerald-50 to-emerald-100 hover:from-emerald-500 hover:to-emerald-600 rounded-3xl p-6 border-4 border-emerald-200 hover:border-emerald-300 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                            📖
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-emerald-700 group-hover:text-white transition-colors">Tiếng Việt</h3>
+                        <p class="text-xs text-emerald-600 group-hover:text-emerald-100 mt-1 font-medium">20 Câu hỏi trắc nghiệm</p>
+                        <div class="mt-4 bg-white group-hover:bg-amber-400 text-emerald-700 group-hover:text-slate-900 text-xs font-bold px-4 py-2 rounded-xl transition-colors">
+                            Bắt đầu ôn tập ➔
+                        </div>
+                    </div>
+
+                    <!-- English Card -->
+                    <div onclick="selectSubject('english')" class="group cursor-pointer bg-gradient-to-b from-sky-50 to-sky-100 hover:from-sky-500 hover:to-sky-600 rounded-3xl p-6 border-4 border-sky-200 hover:border-sky-300 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                            🔤
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-sky-700 group-hover:text-white transition-colors">Tiếng Anh</h3>
+                        <p class="text-xs text-sky-600 group-hover:text-sky-100 mt-1 font-medium">20 Câu hỏi trắc nghiệm</p>
+                        <div class="mt-4 bg-white group-hover:bg-amber-400 text-sky-700 group-hover:text-slate-900 text-xs font-bold px-4 py-2 rounded-xl transition-colors">
+                            Bắt đầu ôn tập ➔
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quizScreen" class="hidden bg-white rounded-3xl p-4 sm:p-8 shadow-xl border-4 border-white flex flex-col gap-6">
+
+            <!-- Progress Bar -->
+            <div>
+                <div class="flex justify-between text-xs font-semibold text-slate-500 mb-1.5">
+                    <span>Môn: <strong id="subjectBadge" class="text-rose-500">Toán</strong></span>
+                    <span id="progressPercent">5%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                    <div id="progressBar" class="bg-gradient-to-r from-amber-400 to-rose-400 h-full rounded-full transition-all duration-300" style="width: 5%"></div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-slate-50 rounded-2xl p-5 sm:p-6 border-2 border-slate-100 relative">
+                <span id="subjectTag" class="absolute -top-3 left-6 px-3 py-0.5 rounded-full text-xs font-bold text-white bg-rose-500 shadow-sm">
+                    TOÁN HỌC
+                </span>
+                <h3 id="questionText" class="font-display text-lg sm:text-xl text-slate-800 font-bold mt-2 leading-snug">
+                    Đang tải câu hỏi...
+                </h3>
+            </div>
+
+            <!-- Options Grid -->
+            <div id="optionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <!-- Dynamic Options Will Be Inserted Here -->
+            </div>
+
+            <!-- Question Navigation Grid (20 numbers) -->
+            <div class="pt-4 border-t border-slate-100">
+                <div class="text-xs font-semibold text-slate-400 mb-2">Chuyển nhanh câu hỏi:</div>
+                <div id="miniNavGrid" class="flex flex-wrap gap-1.5 sm:gap-2">
+                    <!-- 20 question mini buttons -->
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex justify-between items-center pt-2">
+                <button id="prevBtn" onclick="prevQuestion()" class="px-4 py-2.5 rounded-xl border-2 border-slate-200 font-semibold text-slate-600 hover:bg-slate-100 transition-all text-sm sm:text-base flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Câu trước
+                </button>
+
+                <button id="nextBtn" onclick="nextQuestion()" class="bg-brand-blue hover:bg-sky-700 text-white font-bold px-6 py-2.5 rounded-xl shadow-md hover:shadow-sky-200 transition-all text-sm sm:text-base flex items-center gap-2">
+                    <span>Câu tiếp</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <button id="submitBtn" onclick="confirmSubmit()" class="hidden bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-2.5 rounded-xl shadow-md hover:shadow-emerald-200 transition-all text-sm sm:text-base flex items-center gap-2">
+                    <span>NỘP BÀI</span> <i class="fa-solid fa-check-double"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="resultScreen" class="hidden bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-white">
+            <div class="text-center mb-6">
+                <div id="resultIcon" class="text-6xl mb-2 animate-bounce">🏆</div>
+                <h2 id="resultTitle" class="font-display text-2xl sm:text-3xl font-bold text-slate-800">
+                    Xuất Sắc! Em Làm Tốt Lắm!
+                </h2>
+                <p id="resultSubtitle" class="text-slate-500 text-sm sm:text-base mt-1">
+                    Bảng kết quả môn <strong id="resultSubjectName" class="text-brand-blue">Toán Học</strong>
+                </p>
+            </div>
+
+            <!-- Score Summary Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
+                <div class="p-4 bg-amber-50 rounded-2xl border-2 border-amber-100 text-center">
+                    <div class="text-xs text-amber-700 font-semibold mb-1">Điểm Số</div>
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-amber-600">
+                        <span id="scoreTen">10</span><span class="text-xs text-amber-500">/10</span>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-emerald-50 rounded-2xl border-2 border-emerald-100 text-center">
+                    <div class="text-xs text-emerald-700 font-semibold mb-1">Số Câu Đúng</div>
+                    <div class="font-display text-2xl sm:text-3xl font-bold text-emerald-600">
+                        <span id="correctCount">20</span>/20
+                    </div>
+                </div>
+
+                <div class="p-4 bg-indigo-50 rounded-2xl border-2 border-indigo-100 text-center">
+                    <div class="text-xs text-indigo-700 font-semibold mb-1">Thời Gian</div>
+                    <div id="timeTaken" class="font-display text-2xl sm:text-3xl font-bold text-indigo-600">
+                        05:30
+                    </div>
+                </div>
+
+                <div class="p-4 bg-purple-50 rounded-2xl border-2 border-purple-100 text-center">
+                    <div class="text-xs text-purple-700 font-semibold mb-1">Xếp Loại</div>
+                    <div id="gradeBadge" class="font-display text-lg sm:text-xl font-bold text-purple-600 mt-1">
+                        Xuất Sắc
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-display text-lg sm:text-xl font-bold text-slate-800">🔍 Chi tiết câu hỏi và đáp án</h3>
+                    <span class="text-xs text-slate-400">*Gồm giải thích chi tiết</span>
+                </div>
+                <div id="reviewContainer" class="space-y-4 max-h-[380px] overflow-y-auto pr-2">
+                    <!-- Dynamic review items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="restartCurrentSubject()" class="font-display bg-brand-blue hover:bg-sky-700 text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Làm lại môn này
+                </button>
+                <button onclick="goToMenu()" class="font-display bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-house"></i> Chọn môn khác
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-6 text-center text-xs text-slate-500">
+        <p>© 2026 Ôn Tập Trắc Nghiệm Lớp 3 - Bộ Sách Kết Nối Tri Thức Với Cuộc Sống</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Standardized Question Database for Grade 3 (20 per subject)
+        const quizDatabase = {
+            math: [
+                {
+                    question: "Tính kết quả phép nhân: 6 × 8 = ?",
+                    options: ["A. 42", "B. 48", "C. 54", "D. 56"],
+                    correct: 1,
+                    explanation: "Bảng nhân 6: 6 × 8 = 48."
+                },
+                {
+                    question: "Tính kết quả phép chia: 72 : 9 = ?",
+                    options: ["A. 7", "B. 8", "C. 9", "D. 6"],
+                    correct: 1,
+                    explanation: "Bảng chia 9: 72 : 9 = 8."
+                },
+                {
+                    question: "Kết quả của phép tính cộng 45 + 28 là:",
+                    options: ["A. 63", "B. 73", "C. 83", "D. 71"],
+                    correct: 1,
+                    explanation: "45 + 28 = 73 (5 + 8 = 13 viết 3 nhớ 1; 4 + 2 + 1 = 7)."
+                },
+                {
+                    question: "Kết quả của phép tính trừ 90 - 37 là:",
+                    options: ["A. 53", "B. 63", "C. 57", "D. 67"],
+                    correct: 0,
+                    explanation: "90 - 37 = 53 (10 - 7 = 3; 9 - 3 - 1 = 5)."
+                },
+                {
+                    question: "Mỗi con thỏ có 4 cái chân. Hỏi 7 con thỏ có tất cả bao nhiêu cái chân?",
+                    options: ["A. 24 cái", "B. 28 cái", "C. 32 cái", "D. 35 cái"],
+                    correct: 1,
+                    explanation: "Số chân thỏ là: 4 × 7 = 28 (cái chân)."
+                },
+                {
+                    question: "Có 56 quả cam chia đều vào 7 rổ. Hỏi mỗi rổ có bao nhiêu quả cam?",
+                    options: ["A. 6 quả", "B. 7 quả", "C. 8 quả", "D. 9 quả"],
+                    correct: 2,
+                    explanation: "Số quả cam ở mỗi rổ là: 56 : 7 = 8 (quả)."
+                },
+                {
+                    question: "Tìm x, biết: x : 8 = 7",
+                    options: ["A. x = 48", "B. x = 54", "C. x = 56", "D. x = 64"],
+                    correct: 2,
+                    explanation: "Muốn tìm số bị chia ta lấy thương nhân với số chia: x = 7 × 8 = 56."
+                },
+                {
+                    question: "Tìm x, biết: 9 × x = 63",
+                    options: ["A. x = 6", "B. x = 7", "C. x = 8", "D. x = 9"],
+                    correct: 1,
+                    explanation: "Muốn tìm thừa số chưa biết ta lấy tích chia cho thừa số đã biết: x = 63 : 9 = 7."
+                },
+                {
+                    question: "Thực hiện phép tính: 7 × 9 - 18 =",
+                    options: ["A. 45", "B. 53", "C. 35", "D. 42"],
+                    correct: 0,
+                    explanation: "Thực hiện nhân trước: 7 × 9 = 63. Sau đó trừ: 63 - 18 = 45."
+                },
+                {
+                    question: "Thực hiện phép tính: 81 : 9 + 36 =",
+                    options: ["A. 43", "B. 45", "C. 54", "D. 48"],
+                    correct: 1,
+                    explanation: "Thực hiện chia trước: 81 : 9 = 9. Sau đó cộng: 9 + 36 = 45."
+                },
+                {
+                    question: "Trong các phép chia dưới đây, phép chia nào có số dư lớn nhất?",
+                    options: ["A. 17 : 5", "B. 23 : 4", "C. 38 : 6", "D. 44 : 5"],
+                    correct: 2,
+                    explanation: "17:5 = 3 dư 2; 23:4 = 5 dư 3; 38:6 = 6 dư 2; 44:5 = 8 dư 4. Số dư lớn nhất là 4."
+                },
+                {
+                    question: "Một hộp bánh có 48 cái. Người ta lấy ra 1/8 số bánh. Hỏi đã lấy ra bao nhiêu cái bánh?",
+                    options: ["A. 6 cái", "B. 7 cái", "C. 8 cái", "D. 9 cái"],
+                    correct: 0,
+                    explanation: "Số bánh đã lấy ra là: 48 : 8 = 6 (cái bánh)."
+                },
+                {
+                    question: "Hình chữ nhật có chiều dài 9 cm, chiều rộng 6 cm. Chu vi hình chữ nhật đó là:",
+                    options: ["A. 15 cm", "B. 30 cm", "C. 54 cm", "D. 28 cm"],
+                    correct: 1,
+                    explanation: "Chu vi hình chữ nhật = (9 + 6) × 2 = 15 × 2 = 30 cm."
+                },
+                {
+                    question: "Một hình vuông có cạnh 8 cm. Chu vi của hình vuông đó là:",
+                    options: ["A. 16 cm", "B. 24 cm", "C. 32 cm", "D. 64 cm"],
+                    correct: 2,
+                    explanation: "Chu vi hình vuông = Cạnh × 4 = 8 × 4 = 32 cm."
+                },
+                {
+                    question: "Số dư của phép chia 47 : 5 là bao nhiêu?",
+                    options: ["A. 1", "B. 2", "C. 3", "D. 4"],
+                    correct: 1,
+                    explanation: "Ta có: 47 = 5 × 9 + 2. Vậy 47 chia 5 bằng 9 dư 2."
+                },
+                {
+                    question: "Một lớp học có 35 học sinh, xếp đều thành 5 hàng. Hỏi mỗi hàng có bao nhiêu học sinh?",
+                    options: ["A. 6 học sinh", "B. 7 học sinh", "C. 8 học sinh", "D. 9 học sinh"],
+                    correct: 1,
+                    explanation: "Số học sinh ở mỗi hàng là: 35 : 5 = 7 (học sinh)."
+                },
+                {
+                    question: "Mẹ mua 8 túi cam, mỗi túi có 6 quả. Sau đó mẹ cho biếu bà 15 quả. Hỏi mẹ còn lại bao nhiêu quả cam?",
+                    options: ["A. 33 quả", "B. 48 quả", "C. 38 quả", "D. 23 quả"],
+                    correct: 0,
+                    explanation: "Tổng số cam mua: 8 × 6 = 48 quả. Số cam còn lại: 48 - 15 = 33 quả."
+                },
+                {
+                    question: "Trong phép chia cho 7, số dư lớn nhất có thể có là số mấy?",
+                    options: ["A. 7", "B. 6", "C. 5", "D. 8"],
+                    correct: 1,
+                    explanation: "Số dư luôn nhỏ hơn số chia. Vì số chia là 7 nên số dư lớn nhất là 6."
+                },
+                {
+                    question: "Giảm 63 đi 7 lần ta được kết quả là:",
+                    options: ["A. 9", "B. 56", "C. 70", "D. 8"],
+                    correct: 0,
+                    explanation: "Giảm đi 7 lần nghĩa là thực hiện phép chia cho 7: 63 : 7 = 9."
+                },
+                {
+                    question: "Gấp 8 lên 6 lần rồi cộng thêm 24 ta được kết quả là:",
+                    options: ["A. 48", "B. 72", "C. 68", "D. 80"],
+                    correct: 1,
+                    explanation: "Gấp 8 lên 6 lần: 8 × 6 = 48. Cộng thêm 24: 48 + 24 = 72."
+                }
+            ],
+            vietnamese: [
+                {
+                    question: "Từ nào dưới đây là từ chỉ SỰ VẬT?",
+                    options: ["A. Chạy nhảy", "B. Xanh ngắt", "C. Ngôi trường", "D. Vui vẻ"],
+                    correct: 2,
+                    explanation: "'Ngôi trường' là từ chỉ địa điểm/sự vật."
+                },
+                {
+                    question: "Trong câu 'Chú chim hót líu lo trên cành cây', từ nào chỉ HOẠT ĐỘNG?",
+                    options: ["A. Chú chim", "B. Hót", "C. Cành cây", "D. Trên"],
+                    correct: 1,
+                    explanation: "'Hót' là từ chỉ hoạt động phát ra tiếng kêu của chim."
+                },
+                {
+                    question: "Từ nào sau đây là từ chỉ ĐẶC ĐIỂM?",
+                    options: ["A. Quét nhà", "B. Bàn học", "C. Rực rỡ", "D. Đi lại"],
+                    correct: 2,
+                    explanation: "'Rực rỡ' là từ mô tả màu sắc/đặc điểm nổi bật."
+                },
+                {
+                    question: "Trong các câu sau, câu nào sử dụng hình ảnh SO SÁNH?",
+                    options: [
+                        "A. Mùa hè đến mang theo cái nắng oi ả.",
+                        "B. Mặt trời như một quả bóng khổng lồ đỏ rực.",
+                        "C. Em rất thích nghe cô giáo đọc thơ.",
+                        "D. Cây cối trong vườn xanh tươi."
+                    ],
+                    correct: 1,
+                    explanation: "Câu 'Mặt trời như một quả bóng...' dùng từ 'như' để so sánh mặt trời với quả bóng."
+                },
+                {
+                    question: "Từ đồng nghĩa với từ 'chăm chỉ' là từ nào?",
+                    options: ["A. Cần cù", "B. Lười biếng", "C. Dũng cảm", "D. Nhanh nhẹn"],
+                    correct: 0,
+                    explanation: "'Cần cù' cùng nghĩa với 'chăm chỉ'."
+                },
+                {
+                    question: "Từ trái nghĩa với từ 'rộng rãi' là:",
+                    options: ["A. Bao la", "B. Chật hẹp", "C. Mênh mông", "D. Thênh thang"],
+                    correct: 1,
+                    explanation: "Trái nghĩa với 'rộng rãi' là 'chật hẹp'."
+                },
+                {
+                    question: "Câu 'Ôi, bông hoa này đẹp quá!' thuộc kiểu câu nào?",
+                    options: ["A. Câu hỏi", "B. Câu kể", "C. Câu cảm", "D. Câu khiến"],
+                    correct: 2,
+                    explanation: "Câu bộc lộ cảm xúc khen ngợi và kết thúc bằng dấu cảm (!) là câu cảm."
+                },
+                {
+                    question: "Dấu câu nào dùng để kết thúc một CÂU HỎI?",
+                    options: ["A. Dấu chấm (.)", "B. Dấu chấm hỏi (?)", "C. Dấu chấm cảm (!)", "D. Dấu phẩy (,)"],
+                    correct: 1,
+                    explanation: "Câu hỏi luôn kết thúc bằng dấu chấm hỏi (?)."
+                },
+                {
+                    question: "Thành ngữ, ca dao nào nói về lòng biết ơn cha mẹ?",
+                    options: [
+                        "A. Học thầy không tày học bạn.",
+                        "B. Công cha như núi Thái Sơn / Nghĩa mẹ như nước trong nguồn chảy ra.",
+                        "C. Thương người như thể thương thân.",
+                        "D. Ở hiền gặp lành."
+                    ],
+                    correct: 1,
+                    explanation: "Bài ca dao 'Công cha như núi Thái Sơn...' ngợi ca công ơn cha mẹ."
+                },
+                {
+                    question: "Trong bài đọc 'Cổng trường mở ra' (SGK Kết nối tri thức 3), ai là người trằn trọc không ngủ được trước ngày khai trường?",
+                    options: ["A. Người cha", "B. Người mẹ", "C. Người con", "D. Người bà"],
+                    correct: 1,
+                    explanation: "Người mẹ trằn trọc không ngủ được vì lo lắng và bồi hồi cho ngày khai trường của con."
+                },
+                {
+                    question: "Câu nào dưới đây là CÂU KỂ?",
+                    options: [
+                        "A. Bạn tên là gì?",
+                        "B. Em hãy giúp cô đóng cửa lại nhé!",
+                        "C. Hôm nay em đi học sớm.",
+                        "D. Ôi, con mèo đáng yêu làm sao!"
+                    ],
+                    correct: 2,
+                    explanation: "Câu 'Hôm nay em đi học sớm.' dùng để thuật lại sự việc (câu kể)."
+                },
+                {
+                    question: "Điền dấu câu thích hợp vào chỗ trống: 'Cây cối trong vườn nở hoa rực rỡ [...]'",
+                    options: ["A. Dấu chấm hỏi (?)", "B. Dấu chấm (.)", "C. Dấu hai chấm (:)", "D. Dấu gạch ngang (-)"],
+                    correct: 1,
+                    explanation: "Đây là câu kể hoàn chỉnh nên dùng dấu chấm (.) ở cuối câu."
+                },
+                {
+                    question: "Dòng nào gồm các từ ngữ chỉ TÌNH CẢM gia đình?",
+                    options: [
+                        "A. Kính trọng, yêu thương, hiếu thảo",
+                        "B. Chạy nhảy, nô đùa, reo hò",
+                        "C. Bàn ghế, sách vở, bút mực",
+                        "D. Xanh tươi, rực rỡ, mênh mông"
+                    ],
+                    correct: 0,
+                    explanation: "'Kính trọng', 'yêu thương', 'hiếu thảo' là các từ thể hiện tình cảm gia đình."
+                },
+                {
+                    question: "Từ nào viết ĐÚNG chính tả?",
+                    options: ["A. Xong xáo", "B. Xung xáo", "C. Xông xáo", "D. Sông xáo"],
+                    correct: 2,
+                    explanation: "Từ viết đúng chính tả là 'Xông xáo'."
+                },
+                {
+                    question: "Bộ phận in đậm trong câu 'Học sinh **đang đọc sách trong thư viện**' trả lời cho câu hỏi nào?",
+                    options: ["A. Làm gì?", "B. Là gì?", "C. Thế nào?", "D. Ở đâu?"],
+                    correct: 0,
+                    explanation: "'đang đọc sách trong thư viện' chỉ hoạt động nên trả lời cho câu hỏi 'Làm gì?'."
+                },
+                {
+                    question: "Bộ phận trả lời cho câu hỏi 'Ở đâu?' trong câu 'Trên cành cây, những chú chim hót líu lo' là:",
+                    options: ["A. Những chú chim", "B. Hót líu lo", "C. Trên cành cây", "D. Cành cây hót"],
+                    correct: 2,
+                    explanation: "'Trên cành cây' xác định địa điểm, vị trí."
+                },
+                {
+                    question: "Trong bài thơ 'Mưa' (SGK Tiếng Việt 3), hình ảnh nào miêu tả trận mưa rào mùa hè?",
+                    options: [
+                        "A. Mây đen giăng kín trời, sấm chớp đùng đùng",
+                        "B. Tuyết rơi trắng xóa",
+                        "C. Nắng chói chang khắp ngõ",
+                        "D. Gió xuân nhè nhẹ"
+                    ],
+                    correct: 0,
+                    explanation: "Cơn mưa rào mùa hè thường kèm theo mây đen và sấm chớp."
+                },
+                {
+                    question: "Điền ch hay tr vào chỗ trống: '...e già măng mọc'",
+                    options: ["A. ch", "B. tr", "C. gi", "D. r"],
+                    correct: 1,
+                    explanation: "Từ đúng là 'Tre già măng mọc' (âm đầu 'tr')."
+                },
+                {
+                    question: "Từ nào KHÔNG cùng nhóm với các từ còn lại?",
+                    options: ["A. Thầy giáo", "B. Cô giáo", "C. Học sinh", "D. Bàn ghế"],
+                    correct: 3,
+                    explanation: "'Bàn ghế' là từ chỉ đồ vật, các từ còn lại chỉ con người trong trường học."
+                },
+                {
+                    question: "Nội dung chính của câu tục ngữ 'Uống nước nhớ nguồn' khuyên chúng ta điều gì?",
+                    options: [
+                        "A. Phải tiết kiệm nước sạch",
+                        "B. Biết ơn những người đã giúp đỡ, cống hiến cho ta",
+                        "C. Phải chăm chỉ tập thể dục",
+                        "D. Giữ gìn vệ sinh môi trường"
+                    ],
+                    correct: 1,
+                    explanation: "'Uống nước nhớ nguồn' nhắc nhở đạo lý biết ơn người đi trước."
+                }
+            ],
+            english: [
+                {
+                    question: "Look at the word: 'PENCIL CASE'. What does it mean in Vietnamese?",
+                    options: ["A. Bút chì", "B. Hộp bút", "C. Quyển sách", "D. Cặp sách"],
+                    correct: 1,
+                    explanation: "'Pencil case' nghĩa là hộp bút."
+                },
+                {
+                    question: "Choose the correct answer: 'How old are you?' - '.............'",
+                    options: ["A. I am fine, thank you.", "B. I am eight years old.", "C. My name is Linh.", "D. Yes, I do."],
+                    correct: 1,
+                    explanation: "Câu hỏi 'How old are you?' dùng để hỏi tuổi -> 'I am eight years old.'"
+                },
+                {
+                    question: "Fill in the blank: 'What color is the sky?' - 'It is ........'",
+                    options: ["A. green", "B. red", "C. blue", "D. yellow"],
+                    correct: 2,
+                    explanation: "Bầu trời có màu xanh da trời -> 'blue'."
+                },
+                {
+                    question: "How do you say '3 cục tẩy' in English?",
+                    options: ["A. Two erasers", "B. Three erasers", "C. Four erasers", "D. Five erasers"],
+                    correct: 1,
+                    explanation: "3 cục tẩy -> 'Three erasers'."
+                },
+                {
+                    question: "Choose the odd one out (Từ khác nhóm):",
+                    options: ["A. Father", "B. Mother", "C. Teacher", "D. Brother"],
+                    correct: 2,
+                    explanation: "'Teacher' chỉ nghề nghiệp/trường học. Các từ còn lại chỉ thành viên gia đình."
+                },
+                {
+                    question: "Reorder words to make a correct sentence: 'favorite / My / color / red / is / .'",
+                    options: [
+                        "A. My favorite color is red.",
+                        "B. My color favorite is red.",
+                        "C. Red is favorite color my.",
+                        "D. Favorite my color is red."
+                    ],
+                    correct: 0,
+                    explanation: "Cấu trúc đúng: 'My favorite color is + [màu sắc].'"
+                },
+                {
+                    question: "Fill in the blank: 'Where is the cat?' - 'It is ........ the table.' (Ở bên dưới)",
+                    options: ["A. on", "B. in", "C. under", "D. behind"],
+                    correct: 2,
+                    explanation: "Giới từ chỉ vị trí 'ở bên dưới' là 'under'."
+                },
+                {
+                    question: "What is your hobby? - 'I like .........'",
+                    options: ["A. swim", "B. swimming", "C. swam", "D. swims"],
+                    correct: 1,
+                    explanation: "Mẫu câu chỉ sở thích: 'I like + V-ing' -> 'I like swimming'."
+                },
+                {
+                    question: "Look at the action: A child is reading a book. What is he doing?",
+                    options: ["A. He is cooking.", "B. He is reading.", "C. He is dancing.", "D. He is sleeping."],
+                    correct: 1,
+                    explanation: "Đang đọc sách -> 'He is reading.'"
+                },
+                {
+                    question: "Choose the correct question for response: 'Yes, I can.'",
+                    options: ["A. What is your name?", "B. Can you play the piano?", "C. How are you?", "D. Where are you from?"],
+                    correct: 1,
+                    explanation: "Câu trả lời 'Yes, I can' đi kèm câu hỏi 'Can you...?'"
+                },
+                {
+                    question: "Fill in the blank: 'This is my ........ She is my mother's mother.'",
+                    options: ["A. sister", "B. grandmother", "C. aunt", "D. brother"],
+                    correct: 1,
+                    explanation: "Mẹ của mẹ mình là bà ngoại -> 'grandmother'."
+                },
+                {
+                    question: "Which school supply do you use to draw straight lines?",
+                    options: ["A. Ruler", "B. Eraser", "C. Pencil sharpener", "D. School bag"],
+                    correct: 0,
+                    explanation: "Thước kẻ dùng để vẽ đường thẳng -> 'Ruler'."
+                },
+                {
+                    question: "How do you spell the number '12' in English?",
+                    options: ["A. Eleven", "B. Twelve", "C. Twenty", "D. Thirteen"],
+                    correct: 1,
+                    explanation: "Số 12 tiếng Anh viết là 'Twelve'."
+                },
+                {
+                    question: "Fill in: 'Open your ......., please!'",
+                    options: ["A. book", "B. hair", "C. leg", "D. hand"],
+                    correct: 0,
+                    explanation: "Khẩu lệnh lớp học: 'Open your book, please!' (Mở sách ra)."
+                },
+                {
+                    question: "What color do you get when you mix Red and Yellow?",
+                    options: ["A. Green", "B. Orange", "C. Purple", "D. Black"],
+                    correct: 1,
+                    explanation: "Pha màu Đỏ (Red) và Vàng (Yellow) sẽ tạo ra màu Cam ('Orange')."
+                },
+                {
+                    question: "Choose the grammatically correct sentence:",
+                    options: [
+                        "A. She have two eyes.",
+                        "B. She has two eyes.",
+                        "C. She is two eyes.",
+                        "D. She having two eyes."
+                    ],
+                    correct: 1,
+                    explanation: "Chủ ngữ 'She' đi với động từ 'has' -> 'She has two eyes.'"
+                },
+                {
+                    question: "Where do you go to buy books and notebooks?",
+                    options: ["A. Zoo", "B. Bookshop", "C. Park", "D. Playground"],
+                    correct: 1,
+                    explanation: "Nơi mua sách vở là hiệu sách -> 'Bookshop'."
+                },
+                {
+                    question: "Translate into English: 'Tớ có một chiếc cặp sách màu xanh lá.'",
+                    options: [
+                        "A. I have a green school bag.",
+                        "B. I have a blue school bag.",
+                        "C. I have a red school bag.",
+                        "D. I have a yellow school bag."
+                    ],
+                    correct: 0,
+                    explanation: "'Màu xanh lá' = 'green' -> 'I have a green school bag.'"
+                },
+                {
+                    question: "Fill in the blank: 'Stand ......, please!'",
+                    options: ["A. down", "B. up", "C. in", "D. on"],
+                    correct: 1,
+                    explanation: "Khẩu lệnh 'Đứng lên' = 'Stand up'."
+                },
+                {
+                    question: "Choose the correct plural form of 'box':",
+                    options: ["A. 1 box -> 2 boxs", "B. 1 box -> 2 boxes", "C. 1 box -> 2 boxies", "D. 1 box -> 2 box"],
+                    correct: 1,
+                    explanation: "Danh từ kết thúc bằng 'x' thêm '-es' khi ở dạng số nhiều -> 'boxes'."
+                }
+            ]
+        };
+
+        // State Variables
+        let currentSubjectKey = 'math';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timerInterval = null;
+        let totalSeconds = 0;
+
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultScreen = document.getElementById('resultScreen');
+        const quizHeaderStats = document.getElementById('quizHeaderStats');
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const currentQuestionNum = document.getElementById('currentQuestionNum');
+        const subjectBadge = document.getElementById('subjectBadge');
+        const subjectTag = document.getElementById('subjectTag');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const miniNavGrid = document.getElementById('miniNavGrid');
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Select Subject & Start Quiz
+        function selectSubject(subjectKey) {
+            currentSubjectKey = subjectKey;
+            currentQuestions = quizDatabase[subjectKey];
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            totalSeconds = 0;
+
+            welcomeScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            quizHeaderStats.classList.remove('hidden');
+
+            startTimer();
+            renderMiniNav();
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Return to Menu Screen
+        function goToMenu() {
+            clearInterval(timerInterval);
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizHeaderStats.classList.add('hidden');
+            welcomeScreen.classList.remove('hidden');
+        }
+
+        // Timer Function
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds++;
+                const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+                const secs = (totalSeconds % 60).toString().padStart(2, '0');
+                timerDisplay.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        // Render Mini Navigation Grid (20 buttons)
+        function renderMiniNav() {
+            miniNavGrid.innerHTML = '';
+            currentQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-7 h-7 sm:w-8 sm:h-8 text-xs font-bold rounded-lg border flex items-center justify-center transition-all ${
+                    idx === currentQuestionIndex 
+                        ? 'border-brand-blue bg-sky-500 text-white shadow-md font-bold' 
+                        : userAnswers[idx] !== null 
+                            ? 'bg-emerald-100 border-emerald-400 text-emerald-700' 
+                            : 'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
+                }`;
+                btn.textContent = idx + 1;
+                btn.onclick = () => goToQuestion(idx);
+                miniNavGrid.appendChild(btn);
+            });
+        }
+
+        // Load Question details
+        function loadQuestion(index) {
+            const q = currentQuestions[index];
+            currentQuestionNum.textContent = index + 1;
+
+            // Update Subject Badge Styling
+            if (currentSubjectKey === 'math') {
+                subjectBadge.textContent = "Toán Học";
+                subjectTag.textContent = "TOÁN HỌC";
+                subjectTag.className = "absolute -top-3 left-6 px-3 py-0.5 rounded-full text-xs font-bold text-white bg-rose-500 shadow-sm";
+                subjectBadge.className = "text-rose-500 font-bold";
+            } else if (currentSubjectKey === 'vietnamese') {
+                subjectBadge.textContent = "Tiếng Việt";
+                subjectTag.textContent = "TIẾNG VIỆT";
+                subjectTag.className = "absolute -top-3 left-6 px-3 py-0.5 rounded-full text-xs font-bold text-white bg-emerald-600 shadow-sm";
+                subjectBadge.className = "text-emerald-600 font-bold";
+            } else {
+                subjectBadge.textContent = "Tiếng Anh";
+                subjectTag.textContent = "TIẾNG ANH";
+                subjectTag.className = "absolute -top-3 left-6 px-3 py-0.5 rounded-full text-xs font-bold text-white bg-sky-600 shadow-sm";
+                subjectBadge.className = "text-sky-600 font-bold";
+            }
+
+            // Question Text
+            questionText.textContent = `Câu ${index + 1}: ${q.question}`;
+
+            // Render Options
+            optionsContainer.innerHTML = '';
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[index] === optIdx;
+                const optCard = document.createElement('div');
+                optCard.className = `option-card cursor-pointer p-4 rounded-2xl border-2 flex items-center justify-between font-medium text-slate-700 ${
+                    isSelected ? 'selected border-brand-blue bg-sky-50 font-bold text-brand-blue' : 'border-slate-200 bg-white hover:border-slate-300'
+                }`;
+
+                optCard.innerHTML = `
+                    <span class="text-sm sm:text-base">${optText}</span>
+                    <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs ${
+                        isSelected ? 'border-brand-blue bg-brand-blue text-white' : 'border-slate-300'
+                    }">
+                        ${isSelected ? '<i class="fa-solid fa-check"></i>' : ''}
+                    </div>
+                `;
+
+                optCard.onclick = () => selectOption(optIdx);
+                optionsContainer.appendChild(optCard);
+            });
+
+            // Progress Bar
+            const percent = Math.round(((index + 1) / currentQuestions.length) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressPercent.textContent = `${percent}%`;
+
+            // Navigation Buttons
+            prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+            
+            if (index === currentQuestions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+
+            renderMiniNav();
+        }
+
+        // Select Option
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestionIndex] = optionIndex;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Navigation
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion(currentQuestionIndex);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion(currentQuestionIndex);
+            }
+        }
+
+        function goToQuestion(index) {
+            currentQuestionIndex = index;
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Confirm Submit
+        function confirmSubmit() {
+            const unanswered = userAnswers.filter(ans => ans === null).length;
+            if (unanswered > 0) {
+                const confirmChoice = confirm(`Em còn ${unanswered} câu chưa trả lời. Em có chắc chắn muốn nộp bài không?`);
+                if (!confirmChoice) return;
+            }
+            finishQuiz();
+        }
+
+        // Finish Quiz & Show Score Board
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
+            // Calculate Score
+            let correctCount = 0;
+            currentQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            const scoreTen = ((correctCount / currentQuestions.length) * 10).toFixed(1);
+
+            // Update Result UI
+            document.getElementById('scoreTen').textContent = scoreTen;
+            document.getElementById('correctCount').textContent = correctCount;
+
+            const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const secs = (totalSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timeTaken').textContent = `${mins}:${secs}`;
+
+            // Subject name on result
+            const resultSubjectName = document.getElementById('resultSubjectName');
+            if (currentSubjectKey === 'math') resultSubjectName.textContent = "Toán Học";
+            else if (currentSubjectKey === 'vietnamese') resultSubjectName.textContent = "Tiếng Việt";
+            else resultSubjectName.textContent = "Tiếng Anh";
+
+            // Grade Badge & Title
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const gradeBadge = document.getElementById('gradeBadge');
+
+            if (correctCount === 20) {
+                resultIcon.textContent = "🏆";
+                resultTitle.textContent = "Xuất Sắc! Điểm 10 Tuyệt Đối!";
+                gradeBadge.textContent = "Xuất Sắc";
+                gradeBadge.className = "font-display text-lg sm:text-xl font-bold text-amber-500 mt-1";
+            } else if (correctCount >= 16) {
+                resultIcon.textContent = "🌟";
+                resultTitle.textContent = "Giỏi Lắm! Môn Học Này Em Nắm Rất Vững!";
+                gradeBadge.textContent = "Giỏi";
+                gradeBadge.className = "font-display text-lg sm:text-xl font-bold text-emerald-600 mt-1";
+            } else if (correctCount >= 12) {
+                resultIcon.textContent = "👍";
+                resultTitle.textContent = "Khá Tốt! Hãy Cố Gắng Hơn Nữa!";
+                gradeBadge.textContent = "Khá";
+                gradeBadge.className = "font-display text-lg sm:text-xl font-bold text-sky-600 mt-1";
+            } else {
+                resultIcon.textContent = "📚";
+                resultTitle.textContent = "Cần Ôn Tập Lại Nhé!";
+                gradeBadge.textContent = "Cần Cố Gắng";
+                gradeBadge.className = "font-display text-lg sm:text-xl font-bold text-rose-500 mt-1";
+            }
+
+            // Render Detailed Review List
+            renderReviewList();
+
+            // Toggle Screens
+            quizScreen.classList.add('hidden');
+            quizHeaderStats.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+        }
+
+        // Render Review List
+        function renderReviewList() {
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            currentQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.correct;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `p-4 rounded-2xl border-2 ${
+                    isCorrect ? 'border-emerald-200 bg-emerald-50/50' : 'border-rose-200 bg-rose-50/50'
+                }`;
+
+                const userAnsText = userAns !== null ? q.options[userAns] : 'Chưa trả lời';
+                const correctAnsText = q.options[q.correct];
+
+                reviewItem.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <div class="font-bold text-slate-800 text-sm sm:text-base">
+                            <span class="text-xs px-2 py-0.5 rounded-md font-bold text-white ${
+                                currentSubjectKey === 'math' ? 'bg-rose-500' : currentSubjectKey === 'vietnamese' ? 'bg-emerald-600' : 'bg-sky-600'
+                            }">Câu ${idx + 1}</span>
+                            <span class="ml-1">${q.question}</span>
+                        </div>
+                        <span class="text-lg font-bold">${isCorrect ? '✅' : '❌'}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm mb-2">
+                        <div class="${isCorrect ? 'text-emerald-700 font-semibold' : 'text-rose-600 font-semibold'}">
+                            Đáp án em chọn: <span>${userAnsText}</span>
+                        </div>
+                        <div class="text-emerald-700 font-semibold">
+                            Đáp án đúng: <span>${correctAnsText}</span>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-slate-600 bg-white/80 p-2.5 rounded-xl border border-slate-100">
+                        <strong>💡 Lời giải thích:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Restart Current Subject
+        function restartCurrentSubject() {
+            selectSubject(currentSubjectKey);
+        }
+    </script>
+</body>
+</html>
